@@ -1,10 +1,16 @@
 from flask import Flask, request, render_template, jsonify, session
 from uuid import uuid4
+from flask_debugtoolbar import DebugToolbarExtension
 
 from boggle import BoggleGame
 
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "this-is-secret"
+
+# Enable flask debug toolbar
+app.debug = True
+toolbar = DebugToolbarExtension(app)
 
 # The boggle games created, keyed by game id
 games = {}

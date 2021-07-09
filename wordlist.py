@@ -27,9 +27,18 @@ class WordList:
         return words
 
     def check_word(self, word):
-        """Is word in word list?"""
+        """Is word in word list? word should be all uppercase
+        
+            >>> wl = WordList("test_dictionary.txt")
+            >>> wl.check_word("CAT")
+            True
+            >>> wl.check_word("QUOI")
+            False
+        """
 
         return word in self.words
 
 
 english_words = WordList("dictionary.txt")
+
+#english_words.words should be a set of words from the dictionary.txt file
