@@ -33,8 +33,10 @@ def new_game():
     games[game_id] = game
     
     
-    return jsonify({"gameId": game_id,
-        "board": games[game_id].board})
+    return jsonify({
+        "gameId": game_id, 
+        "board": games[game_id].board
+        })
 
 @app.route("/api/score-word", methods=["POST"])
 def score_word():
@@ -46,11 +48,16 @@ def score_word():
     game = games[gameId]
     
     if game.is_word_in_word_list(word) and game.check_word_on_board(word):
-        result = "ok"
+        if game.is_word_not_a_dup(word):
+            result = "ok"
+        else:
+            result = "duplicate"
     elif not game.is_word_in_word_list(word):
         result = "not-word"
     else:
         result = "not-on-board"
-
+    
+    game.play_and_score_word(word)
+    
     return jsonify({"result": result})
     

@@ -58,7 +58,8 @@ class BoggleAppTestCase(TestCase):
         with self.client as client:
             
             # make a test game and then change the board to a set test board
-            test_board = [["A","C","A","R","I"], 
+            test_board = [
+                ["A", "C", "A", "R", "I"], 
                 ["A", "C", "E", "C", "G"],
                 ["T", "U", "E", "B", "R"], 
                 ["Z", "I", "X", "S", "R"], 
@@ -73,17 +74,22 @@ class BoggleAppTestCase(TestCase):
             
             #test word that should be on board and is in dictionary
             response = client.post('/api/score-word',
-                json = {"gameId" : test_id,
-                    "word" : "ACARI"})
+                json = {
+                    "gameId" : test_id,
+                    "word" : "ACARI"
+                    })
             
             data = response.get_json()
             
             self.assertTrue(data["result"] == "ok")
+            self.assertEqual(data, {"result": "ok"})
             
             #test response of non-words
             response = client.post('/api/score-word',
-                json = {"gameId" : test_id,
-                    "word" : "fdsaf"})
+                json = {
+                    "gameId" : test_id,
+                    "word" : "fdsaf"
+                    })
             
             data = response.get_json()
             
@@ -91,8 +97,10 @@ class BoggleAppTestCase(TestCase):
             
             #test response of words that are not on board
             response = client.post('/api/score-word',
-                json = {"gameId" : test_id,
-                    "word" : "lettuce"})
+                json = {
+                    "gameId" : test_id,
+                    "word" : "lettuce"
+                    })
             
             data = response.get_json()
             
